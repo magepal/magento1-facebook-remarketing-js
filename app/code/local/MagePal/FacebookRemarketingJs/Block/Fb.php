@@ -52,9 +52,10 @@ class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
         
         foreach ($collection as $order) {
             
-            $result[] = sprintf("window._fbq.push(['track', '%s', {'value':'%s','currency':'USD'}]);",
+            $result[] = sprintf("window._fbq.push(['track', '%s', {'value':'%s','currency':'%s'}]);",
                 $this->getConfigValue('pixel_category_checkouts_value'),
-                $order->getBaseGrandTotal()
+                $order->getBaseGrandTotal(),
+                $this->getConfigValue('currency')   
             );
     
             

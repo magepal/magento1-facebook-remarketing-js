@@ -49,4 +49,11 @@
             </checkout_multishipping_controller_success_action>
         </events>
     </frontend>
+    <default>
+        <facebookremarketingjs>
+            <marketing>
+                <currency>USD</currency>
+            </marketing>
+        </facebookremarketingjs>
+    </default>
 </config>
