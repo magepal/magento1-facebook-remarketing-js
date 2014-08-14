@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <facebookremarketingjs module="facebookremarketingjs">
+                                        <title>Facebook Remarketing</title>
+                                        <sort_order>80</sort_order>
+                                    </facebookremarketingjs>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+       <translate>
+        <modules>
+            <MagePal_FacebookRemarketingJs>
+                <files>
+                    <default>magepal_adminorderconfirmation.csv</default>
+                </files>
+            </MagePal_FacebookRemarketingJs>
+        </modules>
+    </translate>
+</config>

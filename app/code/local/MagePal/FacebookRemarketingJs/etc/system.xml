@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @package     MagePal_FacebookRemarketingJs
+ */
+-->
+<config>
+    <tabs>
+        <magepal translate="label" module="facebookremarketingjs">
+            <label>MagePal</label>
+            <sort_order>900</sort_order>
+        </magepal>
+    </tabs>
+    <sections>
+        <facebookremarketingjs translate="label" module="facebookremarketingjs">
+            <label>Facebook Remarketing API</label>
+            <tab>magepal</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>340</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <marketing translate="label">
+                    <label>Facebook Remarketing Analytics</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <account translate="label">
+                            <label>Remarketing Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </account>  
+                        <pixel_category_checkouts translate="label">
+                            <label>Enable Checkouts Conversion</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </pixel_category_checkouts> 
+                        <pixel_category_checkouts_value translate="label">
+                            <label>Checkouts Conversion #</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><pixel_category_checkouts>1</pixel_category_checkouts></depends>
+                        </pixel_category_checkouts_value>                                   
+                    </fields>
+                </marketing>
+            </groups>
+        </facebookremarketingjs>
+    </sections>
+</config>

@@ -1,0 +1,42 @@
+<?php
+/**
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     MagePal_FacebookRemarketingJs
+ */
+?>
+<?php if (!Mage::helper('core/cookie')->isUserNotAllowSaveCookie()): ?>
+<?php $accountId = Mage::getStoreConfig(MagePal_FacebookRemarketingJs_Helper_Data::XML_PATH_ACCOUNT) ?>
+<!-- BEGIN FB CODES -->
+<script>(function() {
+  var _fbq = window._fbq || (window._fbq = []);
+  if (!_fbq.loaded) {
+    var fbds = document.createElement('script');
+    fbds.async = true;
+    fbds.src = '//connect.facebook.net/en_US/fbds.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(fbds, s);
+    _fbq.loaded = true;
+  }
+  _fbq.push(['addPixelId', '<?php echo $accountId ?>']);
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', 'PixelInitialized', {}]);
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="//www.facebook.com/tr?id=<?php echo $accountId ?>&amp;ev=NoScript" /></noscript>
+
+    <?php if ($this->showFbOrderTracking()): ?>
+        <script>
+        <?php echo $this->_getOrdersTrackingCode(); ?>
+        </script>
+        <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=<?php echo $this->getConfigValue('pixel_category_checkouts_value') ?>&amp;cd[value]=0&amp;cd[currency]=USD&amp;noscript=1" /></noscript>
+    <?php endif; ?>
+<!-- END FB CODES-->
+
+<?php endif; ?>
