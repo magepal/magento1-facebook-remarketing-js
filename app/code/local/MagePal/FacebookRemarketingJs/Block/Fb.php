@@ -10,9 +10,8 @@
 class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
 {
     
-    private $remId = NULL;
-    private $conversionId = NULL;
-    private $conversionLabel = NULL;
+    private $orderTotal = 0;
+    private $orderCollection = NULL;
     
     
     /**
@@ -35,35 +34,42 @@ class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
      *
      * @return string
      */
-    protected function _getOrdersTrackingCode()
+    protected function getOrdersTrackingCode()
     {
         if(!$this->showFbOrderTracking()){
            return; 
         }
         
-        $orderIds = $this->getOrderIds();
-        if (empty($orderIds) || !is_array($orderIds)) {
-            return;
-        }
-        $collection = Mage::getResourceModel('sales/order_collection')
-            ->addFieldToFilter('entity_id', array('in' => $orderIds));
         $result = array();
         
-        
-        foreach ($collection as $order) {
-            
+        foreach ($this->getOrderCollection() as $order) {            
             $result[] = sprintf("window._fbq.push(['track', '%s', {'value':'%s','currency':'%s'}]);",
                 $this->getConfigValue('pixel_category_checkouts_value'),
                 $order->getBaseGrandTotal(),
-                $this->getConfigValue('currency')   
+                $this->getCurrency()   
             );
-    
-            
         }
+        
         return implode("\n", $result);
     }
     
     
+    private function getOrderCollection(){
+        $orderIds = $this->getOrderIds();
+        
+        if(!$this->orderCollection){
+            $this->orderCollection = Mage::getResourceModel('sales/order_collection')
+                                        ->addFieldToFilter('entity_id', array('in' => $orderIds));
+        }
+        
+        return $this->orderCollection;
+    }
+    
+    /**
+     * Check if module is enabled
+     *
+     * @return bool
+     */
     public function showFbOrderTracking(){
         if($this->getConfigValue('pixel_category_checkouts') == 0 || !$this->getConfigValue('pixel_category_checkouts_value')){
            return false; 
@@ -77,9 +83,22 @@ class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
         return true;
     }
 
-
+    /**
+     * Get system config from field name
+     *
+     * @return string
+     */
     public function getConfigValue($field){
         return Mage::getStoreConfig("facebookremarketingjs/marketing/$field");
+    }
+    
+    /**
+     * Get currency string
+     *
+     * @return string
+     */
+    public function getCurrency(){
+        return $this->getConfigValue('currency') ? $this->getConfigValue('currency') : 'USD';
     }
     
     /**
@@ -90,6 +109,23 @@ class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
     public function getAccountId(){
         return Mage::getStoreConfig(MagePal_FacebookRemarketingJs_Helper_Data::XML_PATH_ACCOUNT);
     }
-
-
+    
+    /**
+     * Get order total
+     *
+     * @return float
+     */
+    public function getOrderTotal(){
+        if($this->showFbOrderTracking()){
+            foreach ($this->getOrderCollection() as $order) {
+                $this->orderTotal += $order->getBaseGrandTotal();
+            }
+        }
+        
+        return Mage::getModel('directory/currency')->format(
+                    $this->orderTotal, 
+                    array('display'=>Zend_Currency::NO_SYMBOL), 
+                    false
+                );
+    }
 }
