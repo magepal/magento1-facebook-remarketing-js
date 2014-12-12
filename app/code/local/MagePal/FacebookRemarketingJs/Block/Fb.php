@@ -63,6 +63,7 @@ class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
         return implode("\n", $result);
     }
     
+    
     public function showFbOrderTracking(){
         if($this->getConfigValue('pixel_category_checkouts') == 0 || !$this->getConfigValue('pixel_category_checkouts_value')){
            return false; 
@@ -81,7 +82,14 @@ class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
         return Mage::getStoreConfig("facebookremarketingjs/marketing/$field");
     }
     
-    
+    /**
+     * Get Facebook Id from config
+     *
+     * @return string
+     */
+    public function getAccountId(){
+        return Mage::getStoreConfig(MagePal_FacebookRemarketingJs_Helper_Data::XML_PATH_ACCOUNT);
+    }
 
 
 }

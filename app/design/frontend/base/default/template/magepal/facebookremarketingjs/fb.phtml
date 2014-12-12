@@ -12,7 +12,7 @@
  */
 ?>
 <?php if (!Mage::helper('core/cookie')->isUserNotAllowSaveCookie()): ?>
-<?php $accountId = Mage::getStoreConfig(MagePal_FacebookRemarketingJs_Helper_Data::XML_PATH_ACCOUNT) ?>
+<?php $accountId = $this->getAccountId(); ?>
 <!-- BEGIN FB CODES -->
 <script>(function() {
   var _fbq = window._fbq || (window._fbq = []);
@@ -38,5 +38,4 @@ window._fbq.push(['track', 'PixelInitialized', {}]);
         <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=<?php echo $this->getConfigValue('pixel_category_checkouts_value') ?>&amp;cd[value]=0&amp;cd[currency]=USD&amp;noscript=1" /></noscript>
     <?php endif; ?>
 <!-- END FB CODES-->
-
 <?php endif; ?>
