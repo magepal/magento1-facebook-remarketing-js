@@ -1,7 +1,7 @@
 Magento Facebook Remarketing and Conversion Tracking
 ===================
 
-Magento Extension to Facebook Remarketing and Conversion Tracking.
+Facebook Remarketing and Conversion Tracking Extension for Magento.
 
 ### Features
 
