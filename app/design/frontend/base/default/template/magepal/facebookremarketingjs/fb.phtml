@@ -11,8 +11,10 @@
  * @package     MagePal_FacebookRemarketingJs
  */
 ?>
-<?php if (!Mage::helper('core/cookie')->isUserNotAllowSaveCookie()): ?>
-<?php $accountId = $this->getAccountId(); ?>
+<?php $remarketingAccountId = $this->getRemarketingAccountId(); ?>
+
+<?php if (!Mage::helper('core/cookie')->isUserNotAllowSaveCookie() && ($remarketingAccountId || $this->showFacebookConversionTracking())): ?>
+
 <!-- BEGIN FB CODES -->
 <script type="text/javascript">
 (function() {
@@ -25,18 +27,25 @@
     s.parentNode.insertBefore(fbds, s);
     _fbq.loaded = true;
   }
-  _fbq.push(['addPixelId', '<?php echo $accountId ?>']);
+  <?php if($remarketingAccountId):?>
+  _fbq.push(['addPixelId', '<?php echo $remarketingAccountId ?>']);
+  <?php endif; ?>
 })();
 window._fbq = window._fbq || [];
-window._fbq.push(['track', 'PixelInitialized', {}]);
-</script>
-<noscript><img height="1" width="1" alt="" style="display:none" src="//www.facebook.com/tr?id=<?php echo $accountId ?>&amp;ev=NoScript" /></noscript>
 
-<?php if ($this->showFbOrderTracking()): ?>
-<script type="text/javascript">
-<?php echo $this->getOrdersTrackingCode(); ?>
+<?php if($remarketingAccountId):?>
+window._fbq.push(['track', 'PixelInitialized', {}]);
+<?php endif; ?>
 </script>
-<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=<?php echo $this->getConfigValue('pixel_category_checkouts_value') ?>&amp;cd[value]=<?php echo $this->getOrderTotal() ?>&amp;cd[currency]=<?php echo $this->getCurrency() ?>&amp;noscript=1" /></noscript>
+<?php if($remarketingAccountId):?>
+<noscript><img height="1" width="1" alt="" style="display:none" src="//www.facebook.com/tr?id=<?php echo $remarketingAccountId ?>&amp;ev=NoScript" /></noscript>
+<?php endif; ?>
+
+<?php if ($this->showFacebookConversionTracking()): ?>
+<script type="text/javascript">
+<?php echo $this->getConversionTrackingCode(); ?>
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=<?php echo $this->getConfigValue('conversion_account') ?>&amp;cd[value]=<?php echo $this->getOrderTotal() ?>&amp;cd[currency]=<?php echo $this->getCurrency() ?>&amp;noscript=1" /></noscript>
 <?php endif; ?>
 <!-- END FB CODES-->
 <?php endif; ?>

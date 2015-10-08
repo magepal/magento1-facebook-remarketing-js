@@ -10,7 +10,7 @@
 class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
 {
     
-    private $orderTotal = 0;
+    private $orderTotal = .01;
     private $orderCollection = NULL;
     
     
@@ -34,9 +34,9 @@ class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
      *
      * @return string
      */
-    protected function getOrdersTrackingCode()
+    protected function getConversionTrackingCode()
     {
-        if(!$this->showFbOrderTracking()){
+        if(!$this->showFacebookConversionTracking()){
            return; 
         }
         
@@ -44,7 +44,7 @@ class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
         
         foreach ($this->getOrderCollection() as $order) {            
             $result[] = sprintf("window._fbq.push(['track', '%s', {'value':'%s','currency':'%s'}]);",
-                $this->getConfigValue('pixel_category_checkouts_value'),
+                $this->getConfigValue('conversion_account'),
                 $order->getBaseGrandTotal(),
                 $this->getCurrency()   
             );
@@ -66,17 +66,14 @@ class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
     }
     
     /**
-     * Check if module is enabled
+     * Check if conversion tracking is enabled
      *
      * @return bool
      */
-    public function showFbOrderTracking(){
-        if($this->getConfigValue('pixel_category_checkouts') == 0 || !$this->getConfigValue('pixel_category_checkouts_value')){
-           return false; 
-        }
+    public function showFacebookConversionTracking(){
         
         $orderIds = $this->getOrderIds();
-        if (empty($orderIds) || !is_array($orderIds)) {
+        if (empty($orderIds) || !is_array($orderIds) || !Mage::helper('facebookremarketingjs')->isConversionAvailable()) {
             return false;
         }
         
@@ -106,8 +103,12 @@ class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
      *
      * @return string
      */
-    public function getAccountId(){
-        return Mage::getStoreConfig(MagePal_FacebookRemarketingJs_Helper_Data::XML_PATH_ACCOUNT);
+    public function getRemarketingAccountId(){
+        if(!Mage::helper('facebookremarketingjs')->isRemarketingAvailable()){
+           return false; 
+        }
+        
+        return Mage::getStoreConfig(MagePal_FacebookRemarketingJs_Helper_Data::XML_PATH_REMARKETING_ACCOUNT);
     }
     
     /**
@@ -116,7 +117,7 @@ class MagePal_FacebookRemarketingJs_Block_Fb extends Mage_Core_Block_Template
      * @return float
      */
     public function getOrderTotal(){
-        if($this->showFbOrderTracking()){
+        if($this->showFacebookConversionTracking()){
             foreach ($this->getOrderCollection() as $order) {
                 $this->orderTotal += $order->getBaseGrandTotal();
             }

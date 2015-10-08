@@ -34,15 +34,7 @@
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
-                    <fields>
-                        <currency translate="label">
-                            <label>Currency</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>10</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </currency>  
+                    <fields>  
                         <active translate="label">
                             <label>Enable</label>
                             <frontend_type>select</frontend_type>
@@ -51,33 +43,51 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </active>
-                        <account translate="label">
-                            <label>Remarketing Number</label>
-                            <frontend_type>text</frontend_type>
+                        </active>  
+                        <remarketing_active translate="label">
+                            <label>Enable Remarketing</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </account>  
-                        <pixel_category_checkouts translate="label">
-                            <label>Enable Checkouts Conversion</label>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </remarketing_active>
+                        <remarketing_account translate="label">
+                            <label>Remarketing Number</label>
+                            <frontend_type>text</frontend_type>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                        </pixel_category_checkouts> 
-                        <pixel_category_checkouts_value translate="label">
-                            <label>Checkouts Conversion #</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>21</sort_order>
+                            <depends><remarketing_active>1</remarketing_active></depends>
+                        </remarketing_account>  
+                        <conversion_active translate="label">
+                            <label>Enable Order Conversion</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                            <depends><pixel_category_checkouts>1</pixel_category_checkouts></depends>
-                        </pixel_category_checkouts_value>                                   
+                        </conversion_active> 
+                        <conversion_account translate="label">
+                            <label>Order Conversion #</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><conversion_active>1</conversion_active></depends>
+                        </conversion_account>
+                        <currency translate="label">
+                            <label>Currency</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </currency>                                  
                     </fields>
                 </marketing>
             </groups>
