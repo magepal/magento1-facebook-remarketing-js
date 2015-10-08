@@ -5,7 +5,7 @@ Facebook Remarketing and Conversion Tracking Extension for Magento.
 
 ### Features
 
-- Works with Magento 1.7.1
+- Works with Magento 1.7.1+
 - Facebook Conversion Tracking
 - Facebook Remarketing Code
 
